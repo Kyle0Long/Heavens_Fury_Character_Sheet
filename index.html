@@ -1,11 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character</title>
 </head>
+
 <body>
-    
+    <div class="info_header">
+        <p class="info_header_title">Name <input id="name" class="char_name_input" type="text" /></p>
+        <p class="info_header_title">Background <input id="background" class="char_background_input" type="text" /></p>
+        <p class="info_header_title">Race <input id="race" class="char_race_input" type="text" /></p>
+        <p class="info_header_title">Level/Class <input id="level" class="char_level_input" min="1" max="20" type="number" /><input
+                id="class" class="char_class_input" type="text" /></p>
+        <p class="info_header_title">Hit Die
+            <select name="hit_die" id="hit_die">
+                <option value="6">d6</option>
+                <option value="8">d8</option>
+                <option value="10">d10</option>
+            </select>
+        </p>
+    </div>
+
 </body>
+
+<script>
+    // EVENT LISTENERS
+
+    document.getElementById('name').addEventListener('change', () => {
+        // Change the page's title to the new character name
+        nameChange(event.target.value);
+    }); // end name change event listener
+
+    // FUNCTIONS
+
+    // Changes the page's title
+    function nameChange(newTitle) {
+        document.title = newTitle;
+    }
+</script>
+
+<style>
+    .info_header {
+        max-width: 30%;
+        max-height: 30%;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+
+        border: 1px solid black;
+    }
+
+    .info_header_title {
+        margin-top: 1%;
+        margin-bottom: 1%;
+        margin-left: 3%;
+    }
+
+    .char_level_input {
+        max-width: 20%;
+        min-width: 15%;
+    }
+
+    .char_class_input {
+        max-width: 50%;
+    }
+</style>
+
 </html>
