@@ -4,48 +4,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character</title>
+    <title>Enter Character Name</title>
 </head>
 
 <body>
-    <div class="info_header">
-        <p class="info_header_title">Name <input id="name" class="char_name_input" type="text" /></p>
-        <p class="info_header_title">Background <input id="background" class="char_background_input" type="text" /></p>
-        <p class="info_header_title">Race <input id="race" class="char_race_input" type="text" /></p>
-        <p class="info_header_title">Level/Class <input id="level" class="char_level_input" min="1" max="20" type="number" /><input
-                id="class" class="char_class_input" type="text" /></p>
-        <p class="info_header_title">Hit Die
-            <select name="hit_die" id="hit_die">
-                <option value="6">d6</option>
-                <option value="8">d8</option>
-                <option value="10">d10</option>
-            </select>
-        </p>
+    <div class="top_row">
+        <div class="info_header">
+            <p class="info_header_title">Name <input id="name" class="char_name_input" type="text" /></p>
+            <p class="info_header_title">Background <input id="background" class="char_background_input" type="text" />
+            </p>
+            <p class="info_header_title">Race <input id="race" class="char_race_input" type="text" /></p>
+            <p class="info_header_title">Level/Class <input id="level" class="char_level_input" min="1" max="20"
+                    type="number" /><input id="class" class="char_class_input" type="text" /></p>
+            <p class="info_header_title">Hit Die
+                <select name="hit_die" id="hit_die">
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                </select>
+            </p>
+        </div>
+
+        <div class="vitals">
+            <div class="vitals_left">
+                <div class="vitals_block">
+                    <p>Block</p>
+                    <input id="block" class="block" type="number">
+                </div>
+                <div class="vitals_armor">
+                    <p>Armor</p>
+                    <input id="armor" class="armor" type="number">
+                </div>
+            </div>
+            <div class="vitals_center">
+                <p>HP</p>
+                <div class="vitals_hp">
+                    <div class="vitals_current_health">
+                        <input id="currHP" class="current_health" type="number">
+                        <p>Current HP</p>
+                    </div>
+                    <div class="vitals_max_health">
+                        <input id="maxHP" class="max_health" type="number">
+                        <p>Max HP</p>
+                    </div>
+                </div>
+            </div>
+            <div class="vitals_right">
+                <div class="vitals_temp_hp">
+                    <p>Temp HP</p>
+                    <input id="tempHP" class="temp_hp" type="number">
+                </div>
+                <div class="vitals_vitality_potion">
+                    <p>Vitality Potion</p>
+                    <input id="vitPotion" class="vitality_potion" type="number">
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
 
 <script>
-    // EVENT LISTENERS
+    const charData = new Object({
+        name: "",
+        background: "",
+        race: "",
+        level: 0,
+        class: "",
+        hitDie: 0,
+        block: 0,
+        armor: 0,
+        currHP: 0,
+        maxHP: 0,
+        tempHP: 0,
+        vitPotion: 0
+    }); // end charData
+
+    // ============= EVENT LISTENERS =============
 
     document.getElementById('name').addEventListener('change', () => {
         // Change the page's title to the new character name
-        nameChange(event.target.value);
+        changeTitle(event.target.value);
     }); // end name change event listener
 
-    // FUNCTIONS
+    // ============= FUNCTIONS =============
 
     // Changes the page's title
-    function nameChange(newTitle) {
+    function changeTitle(newTitle) {
         document.title = newTitle;
-    }
+    } // end changeTitle
+
+    // Saves all entered data into the JS object
+    function saveCharData() {
+        Array.from(document.getElementsByTagName('input')).forEach(input => {
+            // Only inputs with IDs should be character data values
+            if (input.id) {
+                // If the input is a number, then save it as such
+                if (input.type == 'number') {
+                    charData[input.id] = parseInt(input.value);
+                }
+                // Otherwise, just take the value as such
+                else {
+                    charData[input.id] = input.value;
+                } // end if
+            } // end if
+        }); // end input forEach
+
+        // Save data to local storage
+        localStorage.setItem('charData', JSON.stringify(charData))
+    } // end saveCharData
 </script>
 
 <style>
+    .top_row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    /* ============= Info Header ============= */
     .info_header {
         max-width: 30%;
         max-height: 30%;
-        
+
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -67,6 +147,86 @@
 
     .char_class_input {
         max-width: 50%;
+    }
+
+    /* ============= Vitals ============= */
+    .vitals {
+        display: flex;
+        flex-direction: row;
+
+        max-width: 45%;
+        max-height: 30%;
+    }
+
+    .vitals_left {
+        display: flex;
+        flex-direction: column;
+
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .vitals_center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .vitals_right {
+        display: flex;
+        flex-direction: column;
+
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .vitals_hp {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        width: fit-content;
+    }
+
+    .vitals_hp_labels {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        width: 100%;
+    }
+
+    .vitals_current_health {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .vitals_max_health {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .vitals_block,
+    .vitals_armor,
+    .vitals_temp_hp,
+    .vitals_vitality_potion {
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    .max_health,
+    .current_health,
+    .block,
+    .armor,
+    .temp_hp,
+    .vitality_potion {
+        width: 30%;
     }
 </style>
 
