@@ -65,7 +65,7 @@
 </body>
 
 <script>
-    const charData = new Object({
+    var charData = new Object({
         name: "",
         background: "",
         race: "",
@@ -82,6 +82,20 @@
 
     // ============= EVENT LISTENERS =============
 
+    document.addEventListener('onload', () => {
+        loadCharData()
+
+        if (charData.name) {
+            changeTitle(charData.name);
+        } // end if
+    }); // end onload event listener
+
+    Array.from(document.getElementsByTagName('input')).forEach(input => {
+        input.addEventListener('input', () => {
+            saveCharData();
+        });
+    }); // end input forEach
+    
     document.getElementById('name').addEventListener('change', () => {
         // Change the page's title to the new character name
         changeTitle(event.target.value);
@@ -94,14 +108,18 @@
         document.title = newTitle;
     } // end changeTitle
 
-    // Saves all entered data into the JS object
+    // Saves all entered data into the JS object and saves to localstorage
     function saveCharData() {
         Array.from(document.getElementsByTagName('input')).forEach(input => {
             // Only inputs with IDs should be character data values
             if (input.id) {
                 // If the input is a number, then save it as such
                 if (input.type == 'number') {
-                    charData[input.id] = parseInt(input.value);
+                    if (input.value) {
+                        charData[input.id] = parseInt(input.value);
+                    } else {
+                        charData[input.id] = 0;
+                    } // end if
                 }
                 // Otherwise, just take the value as such
                 else {
@@ -113,6 +131,16 @@
         // Save data to local storage
         localStorage.setItem('charData', JSON.stringify(charData))
     } // end saveCharData
+
+    // Loads the data from localstorage and populates the page
+    function loadCharData() {
+        // Get charData from localstorage
+        charData = JSON.parse(localStorage.getItem('charData'));
+
+        Array.from(document.getElementsByTagName('input')).forEach(input => {
+            input.value = charData[input.id]
+        }); // end input forEach
+    } // end loadCharData
 </script>
 
 <style>
