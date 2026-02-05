@@ -1,261 +1,420 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enter Character Name</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="top_row">
-        <div class="info_header">
-            <div class="info_header_field">
-                <label for="name">Name</label>
-                <input id="name" class="char_name_input" type="text" />
-            </div>
-            <div class="info_header_field">
-                <label for="background">Background</label>
-                <input id="background" class="char_background_input" type="text" />
-            </div>
-            <div class="info_header_field">
-                <label for="race">Race</label>
-                <input id="race" class="char_race_input" type="text" />
-            </div>
-            <div class="info_header_field">
-                <label for="level">Level/Class</label>
-                <input id="level" class="char_level_input" min="1" max="20" type="number" />
-                <input id="class" class="char_class_input" type="text" />
-            </div>
-            <div class="info_header_field">
-                <label for="hit_die">Hit Die</label>
-                <select name="hit_die" id="hit_die">
-                    <option value="6">d6</option>
-                    <option value="8">d8</option>
-                    <option value="10">d10</option>
-                </select>
-            </div>
+      <div class="info_header">
+        <div class="info_header_field">
+          <label for="name">Name</label>
+          <input id="name" class="char_name_input" type="text" />
         </div>
+        <div class="info_header_field">
+          <label for="background">Background</label>
+          <input id="background" class="char_background_input" type="text" />
+        </div>
+        <div class="info_header_field">
+          <label for="race">Race</label>
+          <input id="race" class="char_race_input" type="text" />
+        </div>
+        <div class="info_header_field">
+          <label for="level">Level/Class</label>
+          <input
+            id="level"
+            class="char_level_input"
+            min="1"
+            max="20"
+            type="number"
+          />
+          <input id="class" class="char_class_input" type="text" />
+        </div>
+        <div class="info_header_field">
+          <label for="hit_die">Hit Die</label>
+          <select name="hit_die" id="hit_die">
+            <option value="6">d6</option>
+            <option value="8">d8</option>
+            <option value="10">d10</option>
+          </select>
+        </div>
+      </div>
 
-        <div class="vitals">
-            <div class="vitals_left">
-                <div class="vitals_block">
-                    <label for="block">Block</label>
-                    <input id="block" class="block" type="number">
-                </div>
-                <div class="vitals_armor">
-                    <label for="armor">Armor</label>
-                    <input id="armor" class="armor" type="number">
-                </div>
-            </div>
-            <div class="vitals_center">
-                <label for="currHP">HP</label>
-                <div class="vitals_hp">
-                    <div class="vitals_current_health">
-                        <input id="currHP" class="current_health" type="number">
-                        <label for="currHP">Current HP</label>
-                    </div>
-                    <div class="vitals_max_health">
-                        <input id="maxHP" class="max_health" type="number">
-                        <label for="maxHP">Max HP</label>
-                    </div>
-                </div>
-            </div>
-            <div class="vitals_right">
-                <div class="vitals_temp_hp">
-                    <label for="tempHP">Temp HP</label>
-                    <input id="tempHP" class="temp_hp" type="number">
-                </div>
-                <div class="vitals_vitality_potion">
-                    <label for="vitPotion">Vitality Potion</label>
-                    <input id="vitPotion" class="vitality_potion" type="number">
-                </div>
-            </div>
+      <div class="vitals">
+        <div class="vitals_left">
+          <div class="vitals_block">
+            <label for="block">Block</label>
+            <input id="block" class="block" type="number" />
+          </div>
+          <div class="vitals_armor">
+            <label for="armor">Armor</label>
+            <input id="armor" class="armor" type="number" />
+          </div>
         </div>
+        <div class="vitals_center">
+          <label for="currHP">HP</label>
+          <div class="vitals_hp">
+            <div class="vitals_current_health">
+              <input id="currHP" class="current_health" type="number" />
+              <label for="currHP">Current HP</label>
+            </div>
+            <div class="vitals_max_health">
+              <input id="maxHP" class="max_health" type="number" />
+              <label for="maxHP">Max HP</label>
+            </div>
+          </div>
+        </div>
+        <div class="vitals_right">
+          <div class="vitals_temp_hp">
+            <label for="tempHP">Temp HP</label>
+            <input id="tempHP" class="temp_hp" type="number" />
+          </div>
+          <div class="vitals_vitality_potion">
+            <label for="vitPotion">Vitality Potion</label>
+            <input id="vitPotion" class="vitality_potion" type="number" />
+          </div>
+        </div>
+      </div>
     </div>
 
-</body>
+    <div class="condition_tracker">
+      <h1>Condition Tracker</h1>
+      <div class="condition_button_row">
+        <button class="condition_button" id="add_condition_button">
+          Add Condition
+        </button>
+        <button class="condition_button" id="end_round_button">
+          End Round
+        </button>
+      </div>
+      <table class="condition_table">
+        <tr>
+          <th class="condition_name">Name</th>
+          <th class="condition_target">Target</th>
+          <th class="condition_rounds_remaining">Rounds Remaining</th>
+        </tr>
+      </table>
+    </div>
+  </body>
 
-<script>
-    var charData = new Object({
-        name: "",
-        background: "",
-        race: "",
-        level: 0,
-        class: "",
-        hitDie: 0,
-        block: 0,
-        armor: 0,
-        currHP: 0,
-        maxHP: 0,
-        tempHP: 0,
-        vitPotion: 0
+  <script>
+    let charData = new Object({
+      name: "",
+      background: "",
+      race: "",
+      level: 0,
+      class: "",
+      hitDie: "d6",
+      block: 0,
+      armor: 0,
+      currHP: 0,
+      maxHP: 0,
+      tempHP: 0,
+      vitPotion: 0,
+      conditions: {},
     }); // end charData
+
+    const condition_row_string = `<tr>
+        <td><input type=text class="condition_table_input" /></td>
+        <td><input type=text class="condition_table_input" /></td>
+        <td><input type=number class="condition_table_input" /></td>
+      </tr>`;
 
     // ============= EVENT LISTENERS =============
 
-    document.addEventListener('onload', () => {
-        loadCharData()
+    window.addEventListener("load", () => {
+      // Get the saved data
+      loadCharData();
 
-        if (charData.name) {
-            changeTitle(charData.name);
-        } // end if
+      // Print loaded data
+      console.log("Loaded data: ", charData);
+
+      // If there is a name, set it in the tab
+      if (charData.name) {
+        changeTitle(charData.name);
+      } // end if
+
+      // Fill the data throughout the sheet
+      fillCharData();
     }); // end onload event listener
 
-    Array.from(document.getElementsByTagName('input')).forEach(input => {
-        input.addEventListener('input', () => {
-            saveCharData();
-        });
+    Array.from(document.getElementsByTagName("input")).forEach((input) => {
+      input.addEventListener("input", () => {
+        saveCharData();
+      });
     }); // end input forEach
-    
-    document.getElementById('name').addEventListener('change', () => {
-        // Change the page's title to the new character name
-        changeTitle(event.target.value);
+
+    document.getElementById("name").addEventListener("change", () => {
+      // Change the page's title to the new character name
+      changeTitle(event.target.value);
     }); // end name change event listener
+
+    document
+      .getElementById("add_condition_button")
+      .addEventListener("click", () => {
+        let table = document.getElementsByClassName("condition_table")[0];
+        let row = document.createElement("tr");
+
+        // Create inputs for Name, Target, and Rounds Remaining
+        for (let i = 0; i < 3; i++) {
+          let cell = document.createElement("td");
+          let input = document.createElement("input");
+          input.classList.add("condition_table_input");
+          input.addEventListener("input", saveCharData);
+
+          if (i === 2) {
+            input.type = "number";
+            input.value = 1;
+          } else {
+            input.type = "text";
+          }
+
+          cell.appendChild(input);
+          row.appendChild(cell);
+        }
+
+        // Add the row to the table
+        table.appendChild(row);
+
+        // Save the character data
+        saveCharData();
+      }); // end add condition event listener
+
+    document
+      .getElementById("end_round_button")
+      .addEventListener("click", () => {
+        decreaseAllDurations();
+      }); // end end round event listener
 
     // ============= FUNCTIONS =============
 
     // Changes the page's title
     function changeTitle(newTitle) {
-        document.title = newTitle;
+      document.title = newTitle;
     } // end changeTitle
 
     // Saves all entered data into the JS object and saves to localstorage
     function saveCharData() {
-        Array.from(document.getElementsByTagName('input')).forEach(input => {
-            // Only inputs with IDs should be character data values
-            if (input.id) {
-                // If the input is a number, then save it as such
-                if (input.type == 'number') {
-                    if (input.value) {
-                        charData[input.id] = parseInt(input.value);
-                    } else {
-                        charData[input.id] = 0;
-                    } // end if
-                }
-                // Otherwise, just take the value as such
-                else {
-                    charData[input.id] = input.value;
-                } // end if
+      Array.from(document.getElementsByTagName("input")).forEach((input) => {
+        // Only inputs with IDs should be character data values
+        if (input.id) {
+          // If the input is a number, then save it as such
+          if (input.type == "number") {
+            if (input.value) {
+              charData[input.id] = parseInt(input.value);
+            } else {
+              charData[input.id] = 0;
             } // end if
-        }); // end input forEach
+          }
+          // Otherwise, just take the value as such
+          else {
+            charData[input.id] = input.value;
+          } // end if
+        } // end if
+      }); // end input forEach
 
-        // Save data to local storage
-        localStorage.setItem('charData', JSON.stringify(charData))
+      // Then set all condition data
+      charData.conditions = getConditionData();
+
+      // Save data to local storage
+      localStorage.setItem("charData", JSON.stringify(charData));
+
+      // Print save complete
+      console.log("Save Complete.");
     } // end saveCharData
+
+    // Saves the data in the condition table
+    function getConditionData() {
+      // Get condition table
+      let table = document.getElementsByClassName("condition_table")[0];
+      let conditions = [];
+
+      for (let i = 1; i < table.rows.length; i++) {
+        // Create row of conditions
+        let row = {};
+        row.name = table.rows[i].querySelectorAll("input")[0].value;
+        row.target = table.rows[i].querySelectorAll("input")[1].value;
+        row.rounds_remaining = parseInt(
+          table.rows[i].querySelectorAll("input")[2].value,
+        );
+
+        // Add condition to the table
+        conditions.push(row);
+      } // end for
+
+      // Return all conditions
+      return conditions;
+    } // end saveConditionData
 
     // Loads the data from localstorage and populates the page
     function loadCharData() {
-        // Get charData from localstorage
-        charData = JSON.parse(localStorage.getItem('charData'));
+      // Get charData from localstorage
+      charData = JSON.parse(localStorage.getItem("charData"));
 
-        Array.from(document.getElementsByTagName('input')).forEach(input => {
-            input.value = charData[input.id]
-        }); // end input forEach
+      Array.from(document.getElementsByTagName("input")).forEach((input) => {
+        input.value = charData[input.id];
+      }); // end input forEach
     } // end loadCharData
-</script>
 
-<style>
+    function fillCharData() {
+      // Iterate over each piece of data and put it in its input
+      for (let key in charData) {
+        if (document.getElementById(key)) {
+          document.getElementById(key).value = charData[key];
+        }
+      } // end for
+
+      let table = document.getElementsByClassName("condition_table")[0];
+
+      // Add row for each condition
+      if (charData.conditions) {
+        charData.conditions.forEach((condition) => {
+          let row = document.createElement("tr");
+
+          Object.values(condition).forEach((value, index) => {
+            let cell = document.createElement("td");
+            let input = document.createElement("input");
+            input.value = value;
+            input.classList.add("condition_table_input");
+            if (index === 2) {
+              input.type = "number";
+            }
+            input.addEventListener("input", () => {
+              saveCharData();
+            });
+            cell.appendChild(input);
+            row.appendChild(cell);
+          }); // end forEach value
+
+          table.appendChild(row);
+        }); // end forEach condition
+      }
+    } // end fillCharData
+
+    function decreaseAllDurations() {
+      let table = document.getElementsByClassName("condition_table")[0];
+
+      for (let i = table.rows.length - 1; i >= 1; i--) {
+        let inputs = table.rows[i].querySelectorAll("input");
+        if (inputs.length >= 3) {
+          // Decrease duration
+          inputs[2].value--;
+
+          // Remove any durations less than 0
+          if (inputs[2].value <= 0) {
+            table.rows[i].remove();
+          } // end if
+        } // end if
+      } // end for
+
+      saveCharData();
+    } // end decreaseAllDurations
+  </script>
+
+  <style>
     .top_row {
-        display: flex;
-        flex-direction: row;
+      display: flex;
+      flex-direction: row;
     }
 
     /* ============= Info Header ============= */
     .info_header {
-        max-width: 30%;
-        max-height: 30%;
+      max-width: 30%;
+      max-height: 30%;
 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
 
-        border: 1px solid black;
+      border: 1px solid black;
     }
 
     .info_header_field {
-        margin-top: 1%;
-        margin-bottom: 1%;
-        margin-left: 3%;
+      margin-top: 1%;
+      margin-bottom: 1%;
+      margin-left: 3%;
     }
 
     .char_level_input {
-        max-width: 20%;
-        min-width: 15%;
+      max-width: 20%;
+      min-width: 15%;
     }
 
     .char_class_input {
-        max-width: 50%;
+      max-width: 50%;
     }
 
     /* ============= Vitals ============= */
     .vitals {
-        display: flex;
-        flex-direction: row;
+      display: flex;
+      flex-direction: row;
 
-        max-width: 45%;
-        max-height: 30%;
+      max-width: 45%;
+      max-height: 30%;
 
-        border: 1px solid black;
+      border: 1px solid black;
     }
 
-    .vitals_left .vitals_right{
-        display: flex;
-        flex-direction: column;
+    .vitals_left,
+    .vitals_right {
+      display: flex;
+      flex-direction: column;
 
-        justify-content: space-evenly;
-        align-items: center;
+      justify-content: space-evenly;
+      align-items: center;
     }
 
     .vitals_center {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .vitals_hp {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
 
-        width: fit-content;
+      width: fit-content;
     }
 
     .vitals_hp_labels {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
 
-        width: 100%;
+      width: 100%;
     }
 
     .vitals_current_health {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-        border: 1px solid black;
+      border: 1px solid black;
     }
 
     .vitals_max_health {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-        border: 1px solid black;
+      border: 1px solid black;
     }
 
     .vitals_block,
     .vitals_armor,
     .vitals_temp_hp,
     .vitals_vitality_potion {
-        display: flex;
-        flex-direction: column;
+      display: flex;
+      flex-direction: column;
 
-        align-items: center;
-        justify-content: center;
+      align-items: center;
+      justify-content: center;
     }
 
     .max_health,
@@ -264,8 +423,43 @@
     .armor,
     .temp_hp,
     .vitality_potion {
-        width: 30%;
+      width: 30%;
     }
-</style>
 
+    .condition_table {
+      width: 60%;
+      border: 1px solid black;
+    }
+
+    .condition_button_row {
+      width: 15%;
+
+      margin-bottom: 1%;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .condition_table th,
+    .condition_table tr {
+      border: 1px solid black;
+    }
+
+    .condition_name,
+    .condition_target {
+      width: 35%;
+    }
+
+    .condition_rounds_remaining {
+      width: 10%;
+    }
+
+    .condition_table_input {
+      width: 95%;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
 </html>
