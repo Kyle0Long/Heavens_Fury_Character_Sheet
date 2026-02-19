@@ -73,7 +73,12 @@
           </div>
           <div class="vitals_vitality_potion">
             <label for="vitPotion">Vitality Potion</label>
-            <input id="vitPotion" class="vitality_potion" type="number" />
+            <input id="vitPotion" class="vitality_potion" type="text" />
+            <input
+              id="vitPotion_Used"
+              class="vitality_potion"
+              type="checkbox"
+            />
           </div>
         </div>
       </div>
@@ -112,7 +117,8 @@
       currHP: 0,
       maxHP: 0,
       tempHP: 0,
-      vitPotion: 0,
+      vitPotion: "",
+      vitPotion_Used: false,
       conditions: {},
     }); // end charData
 
@@ -208,6 +214,10 @@
               charData[input.id] = 0;
             } // end if
           }
+          // If it is a checkmark, make sure to save it as such
+          else if (input.type == "checkbox") {
+            charData[input.id] = input.checked;
+          }
           // Otherwise, just take the value as such
           else {
             charData[input.id] = input.value;
@@ -251,18 +261,22 @@
     // Loads the data from localstorage and populates the page
     function loadCharData() {
       // Get charData from localstorage
-      charData = JSON.parse(localStorage.getItem("charData"));
-
-      Array.from(document.getElementsByTagName("input")).forEach((input) => {
-        input.value = charData[input.id];
-      }); // end input forEach
+      const storedData = localStorage.getItem("charData");
+      if (storedData) {
+        charData = JSON.parse(storedData);
+      }
     } // end loadCharData
 
     function fillCharData() {
       // Iterate over each piece of data and put it in its input
       for (let key in charData) {
-        if (document.getElementById(key)) {
-          document.getElementById(key).value = charData[key];
+        const element = document.getElementById(key);
+        if (element) {
+          if (element.type === "checkbox") {
+            element.checked = charData[key];
+          } else {
+            element.value = charData[key];
+          }
         }
       } // end for
 
